@@ -16,7 +16,9 @@ MAINTAINER Yeo Sung Jun <sjyeo88@gmail.com>
 
 RUN apt-get update
 RUN apt-get install -y nginx
-RUN apt-get install -y nodejs npm
+RUN apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get install -y nodejs
 
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 RUN chown -R www-data:www-data /var/lib/nginx
