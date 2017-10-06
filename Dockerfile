@@ -19,7 +19,7 @@ RUN apt-get install -y nginx
 RUN apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs
-RUN apt-get install -y npm
+# RUN apt-get install -y npm
 
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 RUN chown -R www-data:www-data /var/lib/nginx
@@ -42,4 +42,4 @@ ENV NODE_ENV development
 EXPOSE 80
 EXPOSE 443
 
-CMD ["npm start"]
+CMD ["/usr/bin/npm start"]
