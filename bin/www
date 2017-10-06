@@ -15,7 +15,7 @@ var configs={
   port:3306,
   database:"USER"
 }
-var httpPort = normalizePort(process.env.PORT || 8080);
+var httpPort = normalizePort(process.env.PORT || 80);
 var app = server.Server.bootstrap(configs).app;
 app.set("port", httpPort);
 var httpServer = http.createServer(app);
