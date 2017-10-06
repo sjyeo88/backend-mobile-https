@@ -19,7 +19,7 @@ import StrategyConfig = require("./auth-strategy")
 
 "use strict";
 
-//Interface Config2
+//Interface Config
 interface setInputInterface {
   host:string,
   user:string,
