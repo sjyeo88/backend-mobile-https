@@ -26,7 +26,7 @@ ADD ./nginx/example /etc/nginx/sites-enabled/example
 ADD ./nginx/example /etc/nginx/sites-available/example
 
 #WORKDIR /etc/nginx
-RUN /etc/init.d/nginx restart
+RUN /etc/init.d/nginx restart &
 
 
 RUN mkdir -p /app
