@@ -42,4 +42,5 @@ ENV NODE_ENV development
 EXPOSE 80
 EXPOSE 443
 
-CMD ["node /bin/www"]
+RUN node ./bin/www
+#CMD ["node ./bin/www"]
