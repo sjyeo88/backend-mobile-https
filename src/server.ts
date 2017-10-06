@@ -125,6 +125,7 @@ export class Server {
 
   public routes = function():void {
     let auth = require("./router/auth")(this);
+    let index = require("./router/index")(this);
     this.app.use('/auth', auth);
   }
 
