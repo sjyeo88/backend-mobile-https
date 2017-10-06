@@ -16,7 +16,7 @@ MAINTAINER Yeo Sung Jun <sjyeo88@gmail.com>
 
 RUN apt-get update
 RUN apt-get install -y nginx
-RUN apt-get install -y -g nodejs
+RUN apt-get install -y nodejs
 
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 RUN chown -R www-data:www-data /var/lib/nginx
