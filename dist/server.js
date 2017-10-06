@@ -38,7 +38,9 @@ class Server {
         };
         this.routes = function () {
             let auth = require("./router/auth")(this);
+            let index = require("./router/index")(this);
             this.app.use('/auth', auth);
+            this.app.use('/', index);
         };
         console.log('Server Started!');
         this.setInput = input;
