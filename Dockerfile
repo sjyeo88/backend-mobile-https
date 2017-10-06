@@ -25,7 +25,7 @@ RUN chown -R www-data:www-data /var/lib/nginx
 ADD ./nginx/example /etc/nginx/sites-enabled/example
 ADD ./nginx/example /etc/nginx/sites-available/example
 
-WORKDIR /etc/nginx
+#WORKDIR /etc/nginx
 RUN /etc/init.d/nginx restart
 
 
