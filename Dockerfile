@@ -9,10 +9,10 @@ WORKDIR /app
 ADD . /app
 
 
- RUN npm install
+RUN npm install
 
- ENV NODE_ENV development
- EXPOSE 80
+ENV NODE_ENV development
+EXPOSE 80
 
 
- CMD ["npm", "start"]
+CMD ["npm", "start"]

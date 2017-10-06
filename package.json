@@ -1,5 +1,5 @@
 {
-  "name": "serv-template2",
+  "name": "backend",
   "version": "1.0.0",
   "description": "Standard sever of Typescript2 + ExpressJs ",
   "main": "index.js",
