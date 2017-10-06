@@ -40,7 +40,5 @@ RUN npm install
 ENV NODE_ENV development
 
 EXPOSE 80
-EXPOSE 443
 
-RUN node ./bin/www
-#CMD ["node ./bin/www"]
+CMD ["node" "./bin/www"]
