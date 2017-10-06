@@ -42,4 +42,4 @@ ENV NODE_ENV development
 EXPOSE 80
 EXPOSE 443
 
-CMD ["/usr/bin/npm start"]
+# CMD ["/usr/bin/npm start"]
