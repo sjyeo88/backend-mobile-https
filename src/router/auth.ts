@@ -73,7 +73,7 @@ module.exports = function(app):express.Router{
         let pwd:string = req.body.password;
         let name:string = req.body.name;
         let sql = 'SELECT * FROM users WHERE authId=?';
-        console.log(mail + "," + pwd)
+        // console.log(mail + "," + pwd)
 
         app.conn.query(sql, ['local:'+mail], function(err, results){
           let user:UserDATA = results[0];

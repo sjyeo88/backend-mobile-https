@@ -1,3 +1,5 @@
+//Remove 0 on file names
+
 export interface setInputInterface {
   host:string,
   user:string,

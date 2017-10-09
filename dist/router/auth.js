@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const pbkdf2Password = require("pbkdf2-password");
 const moment = require("moment");
-const passport = require("passport");
 const config_1 = require("../configure/config");
 let LocalStrategy = require("passport-local");
 let FaceboockStrategy = require("passport-facebook");
@@ -44,7 +43,6 @@ module.exports = function (app) {
         let pwd = req.body.password;
         let name = req.body.name;
         let sql = 'SELECT * FROM users WHERE authId=?';
-        console.log(mail + "," + pwd);
         app.conn.query(sql, ['local:' + mail], function (err, results) {
             let user = results[0];
             if (!user) {
@@ -61,52 +59,5 @@ module.exports = function (app) {
             });
         });
     });
-    router.get("/logout", (req, res) => {
-        req.logout();
-        req.session.save(() => {
-            res.send("local log-out");
-        });
-    });
-    router.get("/fail", (req, res) => {
-        res.send("Auth Fail");
-    });
-    router.get("/welcome", (req, res) => {
-        if (req.user && req.user.name) {
-            res.send('Welcome! ' + req.user.name + '!');
-        }
-        else {
-            res.send('Welcome! Unknown!');
-        }
-    });
-    router.get("/facebook", passport.authenticate('facebook', { scope: ['email', 'user_birthday'] }));
-    router.get("/facebook/callback", passport.authenticate('facebook', {
-        successRedirect: '/auth/welcome',
-        failureRedirect: '/auth/fail'
-    }));
-    router.get("/naver", passport.authenticate('naver', { scope: ['email', 'user_birthday', 'name'] }));
-    router.get("/naver/callback", passport.authenticate('naver', {
-        successRedirect: '/auth/welcome',
-        failureRedirect: '/auth/fail'
-    }));
-    router.get("/google", (req, res, next) => {
-        passport.authenticate('google', { scope: [
-                'https://www.googleapis.com/auth/userinfo.email',
-                'https://www.googleapis.com/auth/userinfo.profile',
-                'https://www.googleapis.com/auth/plus.login',
-                'https://www.googleapis.com/auth/plus.me',
-            ]
-        }, (err, user, info) => {
-            if (err) {
-                return next(err);
-            }
-            if (!user) {
-                return res.send({ success: false, message: 'authentication failed' });
-            }
-        })(req, res, next);
-    });
-    router.get("/google/callback", passport.authenticate('google', {
-        successRedirect: '/auth/welcome',
-        failureRedirect: '/auth/fail'
-    }));
     return router;
 };
