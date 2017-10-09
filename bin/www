@@ -6,17 +6,9 @@ var server = require("../dist/server");
 var debug = require("debug")("express:server");
 var http = require("http");
 
-var configs={
-  // host:"localhost",
-  // password:process.env.SERVER_PASSWORD,
-  host:"182.162.104.243",
-  password:'!dutkak3',
-  user:"root",
-  port:3306,
-  database:"USER"
-}
+
 var httpPort = normalizePort(process.env.PORT || 8080);
-var app = server.Server.bootstrap(configs).app;
+var app = server.Server.bootstrap().app;
 app.set("port", httpPort);
 var httpServer = http.createServer(app);
 

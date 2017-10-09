@@ -4,11 +4,14 @@ const express = require("express");
 const pbkdf2Password = require("pbkdf2-password");
 const moment = require("moment");
 const passport = require("passport");
+const config_1 = require("../configure/config");
 let LocalStrategy = require("passport-local");
 let FaceboockStrategy = require("passport-facebook");
+let jwt = require("jwt-simple");
 let router = express.Router();
 let hasher = pbkdf2Password();
 module.exports = function (app) {
+    let config = new config_1.ServerConfig();
     router.use(function timeLog(req, res, next) {
         console.log('Time', Date.now());
         next();
@@ -30,20 +33,33 @@ module.exports = function (app) {
             let insertUser_Q = 'INSERT INTO users SET ?';
             app.conn.query(insertUser_Q, user, (err, result) => {
                 if (err) {
-                    console.log(err);
-                    res.status(500);
+                    res.json({ success: false, msg: 'Failed to Save' });
                 }
             });
         });
-        res.send("Local Registeration");
+        res.json({ success: true, msg: 'Successfully saved' });
     });
     router.post('/local', (req, res, next) => {
-        console.log('Local Strategy');
-        console.log(req.body);
-        passport.authenticate('local', {
-            successRedirect: '/auth/welcome',
-            failureRedirect: '/auth/fail',
-        })(req, res, next);
+        let mail = req.body.email;
+        let pwd = req.body.password;
+        let name = req.body.name;
+        let sql = 'SELECT * FROM users WHERE authId=?';
+        console.log(mail + "," + pwd);
+        app.conn.query(sql, ['local:' + mail], function (err, results) {
+            let user = results[0];
+            if (!user) {
+                return res.json({ success: false, msg: 'Authentiaion failed, Users not found' });
+            }
+            return hasher({ password: pwd, salt: user.salt }, function (err, pass, salt, hash) {
+                if (hash === user.password) {
+                    let token = jwt.encode(user, config.jwt_password);
+                    res.json({ success: true, token: token, msg: 'Welcome ' + user.name });
+                }
+                else {
+                    return res.json({ succuss: false, msg: 'Authenticaion fialed, Wrong password' });
+                }
+            });
+        });
     });
     router.get("/logout", (req, res) => {
         req.logout();

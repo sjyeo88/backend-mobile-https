@@ -1,6 +1,7 @@
 import * as passport from "passport"
 import * as pbkdf2Password from "pbkdf2-password"
 import * as moment from "moment"
+import { UserDATA } from "./interfaces/userdata.interface"
 
 let LocalStrategy  = require("passport-local").Strategy;
 let FacebookStrategy = require("passport-facebook").Strategy;
@@ -9,33 +10,12 @@ let GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 let hasher:pbkdf2Password  = pbkdf2Password();
 
 
+
 //Interface Config
-interface UserDATA {
-  PK:[undefined, number],
-  authId:string,
-  email:string,
-  password:[undefined, string],
-  sex:string,
-  birth:string,
-  age:number,
-  date:string,
-  salt:string,
-  name:string,
-}
+
 
 export class AuthStrategy {
-
     constructor(app){
-
-    passport.serializeUser(function(user:UserDATA, done:any) {
-      console.log('serializeUser', user);
-      done(null, user);
-    });
-
-    passport.deserializeUser(function(user:UserDATA, done:any) {
-      console.log('deserializeUser', user);
-      done(null, user);
-    });
 
     passport.use(new LocalStrategy(
       {

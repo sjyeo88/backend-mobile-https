@@ -28,14 +28,6 @@ class AuthStrategy {
                 return year - birthYear - 1;
             }
         };
-        passport.serializeUser(function (user, done) {
-            console.log('serializeUser', user);
-            done(null, user);
-        });
-        passport.deserializeUser(function (user, done) {
-            console.log('deserializeUser', user);
-            done(null, user);
-        });
         passport.use(new LocalStrategy({
             usernameField: "email",
             passwordField: "password",

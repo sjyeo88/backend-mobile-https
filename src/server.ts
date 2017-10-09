@@ -15,18 +15,9 @@ import * as MySQLStore from "express-mysql-session"
 import * as session from "express-session"
 import * as passport from "passport"
 import StrategyConfig = require("./auth-strategy")
-
+import { ServerConfig, setInputInterface } from "./configure/config"
 
 "use strict";
-
-//Interface Config2
-interface setInputInterface {
-  host:string,
-  user:string,
-  password:string,
-  port:number,
-  database:string
-}
 
 
 
@@ -38,20 +29,21 @@ export class Server {
   public setInput;
   public auth;
   public strategy;
+  public configure = new ServerConfig()
   //private hasher:pbkdf2Password = new pbkdf2Password();
 
-  public static bootstrap(input:setInputInterface) {
-    return new Server(input);
+  public static bootstrap() {
+    return new Server();
   }
 
 
 
-  constructor(input:setInputInterface) {
+  constructor() {
     //app start
     console.log('Server Started!');
-    this.setInput = input;
-    this.sqlStore = new MySQLStore(input);
-    this.conn = mysql.createConnection(input);
+    this.setInput = this.configure.dbSetting;
+    this.sqlStore = new MySQLStore(this.setInput);
+    this.conn = mysql.createConnection(this.setInput);
     this.conn.connect(function(err){
       if (err) {
         console.error('mysql connection error');

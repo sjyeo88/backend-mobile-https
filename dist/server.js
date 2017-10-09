@@ -11,9 +11,11 @@ const MySQLStore = require("express-mysql-session");
 const session = require("express-session");
 const passport = require("passport");
 const StrategyConfig = require("./auth-strategy");
+const config_1 = require("./configure/config");
 "use strict";
 class Server {
-    constructor(input) {
+    constructor() {
+        this.configure = new config_1.ServerConfig();
         this.config = function () {
             this.app.use(express.static(path.join(__dirname, "public")));
             this.app.use(logger("dev"));
@@ -43,9 +45,9 @@ class Server {
             this.app.use('/', index);
         };
         console.log('Server Started!');
-        this.setInput = input;
-        this.sqlStore = new MySQLStore(input);
-        this.conn = mysql.createConnection(input);
+        this.setInput = this.configure.dbSetting;
+        this.sqlStore = new MySQLStore(this.setInput);
+        this.conn = mysql.createConnection(this.setInput);
         this.conn.connect(function (err) {
             if (err) {
                 console.error('mysql connection error');
@@ -61,8 +63,8 @@ class Server {
         this.routes();
         this.strategy = new StrategyConfig.AuthStrategy(this);
     }
-    static bootstrap(input) {
-        return new Server(input);
+    static bootstrap() {
+        return new Server();
     }
     api() {
     }
