@@ -45,6 +45,7 @@ module.exports = function (app) {
         let sql = 'SELECT * FROM users WHERE authId=?';
         app.conn.query(sql, ['local:' + mail], function (err, results) {
             let user = results[0];
+            console.log(user);
             if (!user) {
                 return res.json({ success: false, msg: 'Authentiaion failed, Users not found' });
             }

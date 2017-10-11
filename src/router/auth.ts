@@ -77,7 +77,7 @@ module.exports = function(app):express.Router{
 
         app.conn.query(sql, ['local:'+mail], function(err, results){
           let user:UserDATA = results[0];
-          // console.log(user)
+          console.log(user)
 
           if (!user) {
             return res.json(
