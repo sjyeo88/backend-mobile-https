@@ -9,7 +9,7 @@ var createServer = require("auto-sni");
 var cors = require('cors')
 
 
-var httpPort = normalizePort(process.env.PORT || 3000);
+var httpPort = normalizePort(process.env.PORT || 80);
 var app = server.Server.bootstrap().app;
 var port = 443
 
@@ -22,7 +22,7 @@ var httpServer = createServer({
   //dir: "/etc/letsencrypt/live/restapi-test.xyz", // Directory for storing certificates. Defaults to "~/letsencrypt/etc" if not present.
   dir: "/etc/letsencrypt", // Directory for storing certificates. Defaults to "~/letsencrypt/etc" if not present.
   ports: {
-    http: 3000, // Optionally override the default http port.
+    http: 80, // Optionally override the default http port.
     https: 443 // // Optionally override the default https port.
   }
 }, app);

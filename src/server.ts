@@ -6,6 +6,7 @@ import * as path from "path";
 import errorHandler = require("errorhandler");
 import methodOverride = require("method-override");
 import * as logger from "morgan";
+import cors = require('cors')
 
 //Model Modules
 import * as mysql from "mysql";
@@ -113,6 +114,7 @@ export class Server {
 
     //error handling
     this.app.use(errorHandler());
+    this.app.use(cors());
   }
 
   public routes = function():void {

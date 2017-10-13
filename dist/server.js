@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const errorHandler = require("errorhandler");
 const logger = require("morgan");
+const cors = require("cors");
 const mysql = require("mysql");
 const MySQLStore = require("express-mysql-session");
 const session = require("express-session");
@@ -37,6 +38,7 @@ class Server {
                 next(err);
             });
             this.app.use(errorHandler());
+            this.app.use(cors());
         };
         this.routes = function () {
             let auth = require("./router/auth")(this);
