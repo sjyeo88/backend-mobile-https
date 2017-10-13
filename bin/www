@@ -4,33 +4,16 @@
 //module dependencies
 var server = require("../dist/server");
 var debug = require("debug")("express:server");
-//var http = require("http");
-var createServer = require("auto-sni");
-var cors = require('cors')
+var http = require("http");
 
 
-var httpPort = normalizePort(process.env.PORT || 80);
+var httpPort = normalizePort(process.env.PORT || 3000);
 var app = server.Server.bootstrap().app;
-var port = 443
-
-
-var httpServer = createServer({
-  email: "sjyeo88@gmail.com", // Emailed when certificates expire.
-  agreeTos: true, // Required for letsencrypt.
-  debug: true, // Add console messages and uses staging LetsEncrypt server. (Disable in production)
-  domains: ["restapi-test.xyz"], // List of accepted domain names. (You can use nested arrays to register bundles with LE).
-  //dir: "/etc/letsencrypt/live/restapi-test.xyz", // Directory for storing certificates. Defaults to "~/letsencrypt/etc" if not present.
-  dir: "/etc/letsencrypt", // Directory for storing certificates. Defaults to "~/letsencrypt/etc" if not present.
-  ports: {
-    http: 80, // Optionally override the default http port.
-    https: 443 // // Optionally override the default https port.
-  }
-}, app);
-
+app.set("port", httpPort);
+var httpServer = http.createServer(app);
 
 //listen on provided ports
-//httpServer.listen(httpPort);
-httpServer.listen(port);
+httpServer.listen(httpPort);
 
 //add error handler
 httpServer.on("error", onError);
