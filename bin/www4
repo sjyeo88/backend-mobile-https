@@ -1,0 +1,18 @@
+createServer = require("auto-sni");
+ 
+var server = createServer({
+  email: "sjyeo88@gmail.com", // Emailed when certificates expire.
+  agreeTos: true, // Required for letsencrypt.
+  debug: true, // Add console messages and uses staging LetsEncrypt server. (Disable in production)
+  domains: ["restapi-test"], // List of accepted domain names. (You can use nested arrays to register bundles with LE).
+  dir: "/etc/letsencrypt", // Directory for storing certificates. Defaults to "~/letsencrypt/etc" if not present.
+  ports: {
+    http: 3000, // Optionally override the default http port.
+    https: 443 // // Optionally override the default https port.
+  }
+});
+ 
+// Server is a "https.createServer" instance.
+server.once("listening", ()=> {
+  console.log("We are ready to go.");
+});
